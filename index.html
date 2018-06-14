@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Телефонный справочник</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="app">
+        <section class="new">
+            <form @submit.prevent="handleAdd">
+                <div class="field">
+                    <label for="addName">ФИО</label>
+                    <input id="addName" name="addName" type="text" v-model="personName">
+                </div>
+                <div class="field">
+                    <label for="addEmail">Email</label>
+                    <input id="addEmail" name="addEmail" type="email" v-model="personEmail">
+                </div>
+                <div class="field">
+                    <label for="addPhone">Телефон</label>
+                    <input id="addPhone" name="addPhone" type="tel" v-model="personPhone">
+                </div>
+                <div class="control">
+                    <button type="submit">
+                        Добавить
+                    </button>
+                </div>
+            </form>
+        </section>
+        <section class="table">
+            <template v-for="(phoneCard, index) in phoneCards">
+                <div class="cell">{{ index + 1 }}</div>
+                <div class="cell">{{ phoneCard.name }}</div>
+                <div class="cell">{{ phoneCard.email }}</div>
+                <div class="cell">{{ phoneCard.phone }}</div>
+                <div class="cell">
+                    <a @click.prevent="handleShowModal(index)" href="">изменить</a>
+                </div>
+            </template>
+        </section>
+        <section class="modal" v-if=this.modalVisible>
+            <div class="modal-content">
+                <header>
+                    <h4>Редактирование информации</h4>
+                    <button @click.prevent="handleCloseModal">x</button>
+                </header>
+                <form @submit.prevent="handleUpdate" v-model="elemToEdit">
+                    <div class="field">
+                        <label for="editName">ФИО</label>
+                        <input id="editName" name="editName" type="text" v-model="editPersonName">
+                    </div>
+                    <div class="field">
+                        <label for="editEmail">Email</label>
+                        <input id="editEmail" name="editEmail" type="email" v-model="editPersonEmail">
+                    </div>
+                    <div class="field">
+                        <label for="editPhone">Телефон</label>
+                        <input id="editPhone" name="editPhone" type="tel" v-model="editPersonPhone">
+                    </div>
+                    <div class="control">
+                        <button type="submit">Обновить</button>
+                        <button @click.prevent="handleRemove">Удалить</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </div>
+    <script src="js/vue.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
